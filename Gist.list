@@ -1,0 +1,125 @@
+Introduction to Rejex
+Introductory paragraph (replace this with your text)
+
+Summary
+Briefly summarize the regex you will be describing and what you will explain. Include a code snippet of the regex. Replace this text with your summary.
+
+Table of Contents
+
+Anchors
+Quantifiers
+Grouping Constructs
+Bracket Expressions
+Character Classes
+The OR Operator
+Flags
+Character Escapes
+
+
+Regex Components
+
+Anchors
+- ^ and $ are considered as anchors
+- ^ signifies the begining of a string
+- $ signifies the ending of a string
+
+Quantifiers
+- set the limits of the string that your regex matches
+- these include mininum and maximum number of characters
+- Quantifiers are inherently greedy, means they try to follow a particular pattern
+ - * matches the pattern zero or more times
+ - + matches the pattern zero or more times
+ - ? matches the pattern zero or more times
+ - {} these brackets can be used to set limits for a match
+  - { n } matches the pattern exactly n number of times
+  - { n, } matches the pattern at least n number of times
+  - { n, x } matches the pattern from a minimum of n number of times and the x is the maximum
+- by adding ? you can make the quantifiers lazy, this will match as few occurrences as possible
+
+Example:
+/^[a-z0-9_-]{3,16}$/
+ - 123
+ - 13rn-adinkin1_tl
+ - 123 is a match because it meets the requirement of 3 characters and 13rn-adinkin1 aslo is a match
+ because it has 16 charaters(minimum of 3 and maximum of 16 charaters)
+ - 36*?
+ - Lt12_condkenkdo52
+ - These two examples don't match(not a minimum of 3 and more than 16 charaters, plus there was a 
+ uppercase character, * and ? can't be in the expression)
+ 
+Grouping Constructs
+- When regular expressions get more complicated you can use the Grouping Constructs
+- by using parentheses (()) you can group the regex this is called subexpression
+
+Example:
+- (abc):(xyz)
+- these two string would match because they are in order but "acb:xyz" does not match up
+- Grouping Construct have two primary categories:
+ - Capturing = capture the matched character sequences for re-use
+ - Non-Capturing = does not capture the matched characters 
+  - you can construct this by adding the characters ?: at the beginning of an expression inside the parentheses
+  
+Bracket Expressions
+- [] anything in these brackets we will want to match
+- this is known as a Bracket Expression but is also known as a Positive Character Group because we want to include 
+everything in between
+
+Example:
+[abc] will look for a string that includes a, b, and c. Doesn't matter the length of the string
+"aaa", "band", "cat" would be a match
+
+- a Hyphen (-) is used to show the range of the possible characters
+
+Example:
+[a-c] and [abc] will mean the same thing :)
+
+Matching Username Example:
+[a-z] this string can only contain lowercase letters between a-z
+[a-zA-Z] this will include both lower and uppercase
+[0-9] will only contain numbers 0-9(0,1,2,3....9)
+[_-] can contain underscore or hypen
+[a-zA-Z0-9_-] this expression will contain all the numbers, letters upper and lower with underscore and hypen
+[Puk125-kek_g] this string fulfills the requirements of this regex [a-zA-Z0-9_-]
+^ adding this inside the bracket will turn your expression into a Negative Character Group [^qwertASDFG]
+
+Character Classes
+- in a regex defines a set of characters in a string to find a match
+
+Example:
+- . = matches any character execept the newline character (\n)
+- \d = matches any Arabic Numeral Digit this class is the same as the experession [0-9]
+- \w = matches any alphanmueric character from the basic latin alphabet, including the underscore (_). This class is the same 
+as the experession [A-Za-z0-9_]
+- \s = matches a single whitespace character, that which includes tabs and line breaks
+- these classes can be changed to perform an inverse match by capitalizing the letter character
+EX: \D matches a non-digit character
+
+The OR Operator
+- the bracket does not require the string to meet all the requirements in the pattern
+- by using OR Operator (|), the expression [abc] is the same is (a|b|c)
+
+Example:
+- (abc):(xyz)
+OR Operator
+- (a|b|c):(x|y|z)
+- these two expressions would be a match
+BUT
+- "xyz:abc" will not be a match
+
+Flags
+- Flags are placed at the end of a regex, after the second slash, they also define additional functionality or limits for the regex
+- there are 6 optional flags that can be used to either sepearately or together in any order
+
+Example(3):
+- g = Global search: the regex should be tested with all possible matches in a string
+- i = Case-insensitive search: will make the case to ignore the matching in a string
+- m = Multi-line search: a multi-line input string should be treated as multiple lines
+
+Character Escapes
+- the backlash (/) in a regex excuses a charater that would be interpreted
+
+Example:
+- the curly brace { is used to begin a quantifier 
+- by adding a backlash before the open curly brace \{
+ - it tells the regex to look for a character instead of beginning a quatifier
+ - this method is used when looking for a string with a special character(s) in a particular component of a regex
